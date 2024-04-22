@@ -68,16 +68,33 @@ class Book {
     }
 }
 
-#Preview {
-    do {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try ModelContainer(for: Book.self, configurations: config)
-        let book = Book(title: "Shoe Dog", author: "Phil Knight", genre: "Mystery", review: "A great book!", rating: 4)
-        var example = [Book]()
-        example.append(book)
-        
-        return ContentView()
-    } catch {
-        return Text("Failed to create a preview: \(error.localizedDescription)")
+private extension Book {
+    static var phantomTollbooth: Book {
+        .init(title: "The Phantom Tollbooth",
+              author: "Norton Juster",
+              genre: "Fantasy",
+              review: "The Phantom Tollbooth is a whimsical adventure that starts with a bored boy named Milo. He stumbles upon a magical tollbooth and embarks on a journey through fantastical lands like Dictionopolis and Digitopolis. Through wordplay, puns, and quirky characters, Milo learns the importance of imagination, knowledge, and friendship. It's a fun and thought-provoking read for all ages!",
+              rating: 5)
     }
+    
+    static var mockingbird: Book {
+        .init(title: "To Kill a Mockingbird",
+              author: "Harper Lee",
+              genre: "Mystery",
+              review: "A powerful story about racial injustice and the importance of compassion.",
+              rating: 4)
+    }
+}
+
+private extension [Book] {
+    static var examples: [Book] = [
+        Book.phantomTollbooth,
+        Book.mockingbird
+    ]
+}
+
+#Preview {
+    let preview = PreviewContainer([Book.self])
+    preview.add(items: [Book].examples)
+    return ContentView().modelContainer(preview.container)
 }
