@@ -93,8 +93,15 @@ private extension [Book] {
     ]
 }
 
-#Preview {
-    let preview = PreviewContainer([Book.self])
-    preview.add(items: [Book].examples)
-    return ContentView().modelContainer(preview.container)
+#Preview("Bookworm Empty") {
+    SwiftDataViewer(preview: PreviewContainer([Book.self])) {
+        ContentView()
+    }
 }
+
+#Preview("Bookworm with Data") {
+    SwiftDataViewer(preview: PreviewContainer([Book.self]), items: [Book].examples) {
+        ContentView()
+    }
+}
+
