@@ -17,6 +17,8 @@ struct ContentView: View {
     
     @State private var showingAddScreen = false
     
+    let dateFormat = Date.FormatStyle().month().year()
+    
     func deleteBooks(at offsets: IndexSet) {
         for offset in offsets {
             let book = books[offset]
@@ -37,7 +39,12 @@ struct ContentView: View {
                                 Text(book.title)
                                     .font(.headline)
                                     .foregroundStyle(book.rating == 1 ? .red : .primary)
-                                Text(book.author)
+                                HStack{
+                                    Text("\(book.author)")
+                                    Spacer()
+                                    Text("\(book.date.formatted(dateFormat))")
+                                        .padding(.horizontal)
+                                }
                                     .foregroundStyle(.secondary)
                             }
                         }

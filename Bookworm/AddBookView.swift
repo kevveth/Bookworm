@@ -16,6 +16,7 @@ struct AddBookView: View {
     @State private var genre = "Fantasy"
     @State private var review = ""
     @State private var rating = 3
+    @State private var date = Date.now
     
     let genres = ["Fantasy", "Biography","Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
     
