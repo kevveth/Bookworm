@@ -19,6 +19,23 @@ struct AddBookView: View {
     
     let genres = ["Fantasy", "Biography","Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
     
+    var validBook: Bool {
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedAuthor = author.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if trimmedTitle.isEmpty || trimmedAuthor.isEmpty {
+            return false
+        }
+        
+        return true
+    }
+    
+    func save() {
+        let newBook = Book(title: title, author: author, genre: genre, review: review, rating: rating)
+        modelContext.insert(newBook)
+        dismiss()
+    }
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -40,11 +57,8 @@ struct AddBookView: View {
                 }
                 
                 Section {
-                    Button("Save") {
-                        let newBook = Book(title: title, author: author, genre: genre, review: review, rating: rating)
-                        modelContext.insert(newBook)
-                        dismiss()
-                    }
+                    Button("Save", action: save)
+                        .disabled(validBook == false)
                 }
             }
             .navigationTitle("Add Book")
